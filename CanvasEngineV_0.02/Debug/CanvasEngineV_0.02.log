@@ -1,36 +1,19 @@
-﻿Build started 7/24/2014 5:54:32 PM.
+﻿Build started 7/24/2014 7:14:59 PM.
      1>Project "C:\Users\weijin\Documents\GitHub\CanvasEngineV_0.021\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Engine.cpp GUI.cpp GUIassets.cpp Main.cpp physicsEngine.cpp physicsShape.cpp World.cpp
-         World.cpp
-         physicsShape.cpp
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(86): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(90): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(98): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(178): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(181): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(668): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(689): warning C4018: '<' : signed/unsigned mismatch
-         physicsEngine.cpp
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsengine.cpp(326): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Engine.cpp GUIassets.cpp Main.cpp
          Main.cpp
      1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
      1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\main.cpp(110): warning C4553: '==' : operator has no effect; did you intend '='?
      1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\main.cpp(112): warning C4553: '==' : operator has no effect; did you intend '='?
          GUIassets.cpp
      1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
-         GUI.cpp
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\gui.cpp(177): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\gui.cpp(480): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\gui.cpp(487): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
          Engine.cpp
      1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
          Generating Code...
-     1>c:\users\weijin\documents\github\canvasenginev_0.021\canvasenginev_0.02\physicsshape.cpp(659): warning C4715: 'PolygonvsPolygon' : not all control paths return a value
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /l"0x0409" /nologo /fo"Debug\CanvasEngineV_0.02.res" CanvasEngineV_0.02.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\weijin\Documents\GitHub\CanvasEngineV_0.021\Debug\CanvasEngineV_0.02.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\weijin\Documents\GitHub\CanvasEngineV_0.021\Debug\CanvasEngineV_0.02.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\weijin\Documents\GitHub\CanvasEngineV_0.021\Debug\CanvasEngineV_0.02.lib" /MACHINE:X86 Debug\CanvasEngineV_0.02.res
+         Debug\AiEngine.obj
          Debug\Engine.obj
          Debug\GUI.obj
          Debug\GUIassets.obj
@@ -44,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.70
+Time Elapsed 00:00:02.03
