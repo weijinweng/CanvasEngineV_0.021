@@ -6,7 +6,7 @@
 #include <string>
 #include <random>
 #include <time.h>
-
+#include "Engine.h"
 
 enum ai_event {WORKING, EATING, RESTING, FIGHTING, OTHER, NONE};
 enum ai_name {Alex, Alexander, Aristotle, Blackberry, Carols, Dummy, Eagle, DrPepper};
@@ -214,7 +214,7 @@ public:
 	Relation* generateRelation();
 };
 
-class aiEngine
+class aiEngine:public CanvasSystem
 {
 public:
 	aiEngine();

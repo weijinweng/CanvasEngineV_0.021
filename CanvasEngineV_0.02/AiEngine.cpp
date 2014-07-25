@@ -1117,7 +1117,7 @@ Schedule* aiPerson::generateSchedule(std::vector<aiPerson*>& npc)
 }
 
 ////////////////////aiEngine//////////////////////////////////
-aiEngine::aiEngine()
+aiEngine::aiEngine():CanvasSystem
 {
 }
 
@@ -1188,18 +1188,32 @@ bool aiEngine::simulate()
 
 	std::cout << std::endl;
 	std::cout << "simulate begins " << std::endl;
-
-	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
+	CanvasTimer timer = CanvasTimer();
+	timer.beginFrame();
+	int day = 0;
+	int time = 0;
+	do
 	{
-		std::cout << std::endl;
-		std::cout << "person " << (*it)->idNum << " simulate begins..." << std::endl;
-		for (int i = 0; i < 8; i++)
+		for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
 		{
-			(*it)->dailyEvents[i]->generateEffect(i);
-			(*it)->updateBuff(i);
-			(*it)->dailyEvents[i]->eventCausedByBuff(i);
+			std::cout << std::endl;
+			std::cout << "person " << (*it)->idNum << " simulate begins..." << std::endl;
+			for (int i = 0; i < 8; i++)
+			{
+				(*it)->dailyEvents[i]->generateEffect(i);
+				(*it)->updateBuff(i);
+				(*it)->dailyEvents[i]->eventCausedByBuff(i);
+			}
 		}
-	}
+		time = timer.getDeltaTime()/90000;
+		while (time < 1)
+		{
+
+		}
+
+	while ()
+	day += timer.getDeltaTime()/90000;
+
 	return true;
 }
 
