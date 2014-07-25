@@ -12,7 +12,6 @@ enum ai_event {WORKING, EATING, RESTING, FIGHTING, OTHER, NONE};
 enum ai_name {Alex, Alexander, Aristotle, Blackberry, Carols, Dummy, Eagle, DrPepper};
 enum ai_relation {STRANGER, COLLEGUE, ACQUAINTANCE, FAMILY, FRIENDS, LOVERS};
 enum ai_friendship {OPPONENT,UNFRIENDLY,NOTGOOD, JUSTSOSO, NOTBAD, FRIENDLY, BROTHER}; 
-enum ai_time {EIGHTAM, TENAM, TWELVEAM, TWOPM, FOURPM, SIXPM, EIGHTPM, TENPM}; 
 
 class aiPerson;
 class aiRelation;
@@ -71,6 +70,14 @@ struct aiDebuff
 	int BEHINDSCHEDULE;
 };
 
+struct aiTime
+{
+	int day;
+	int hour;
+	int min;
+	int sec;
+};
+
 const int aiSize = 50;
 
 static std::vector<ai_event> ai_schedule1;   //defined in aiEngine class as a primitive one which will be altered later
@@ -104,10 +111,11 @@ public:
 class aiEvents
 {
 public:
-	aiEvents(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time);
+	aiEvents(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time);
 	ai_event eventType;
-	ai_time eventTime;
+	aiTime* time;
 	aiPerson* personA;
+	int eventStage;             //in another word, the time of the event
 	std::vector<aiEvents*> eventList;
 	std::vector<aiPerson*> aiInvolved;
 	std::vector<aiPerson*> aiList;
@@ -125,7 +133,7 @@ public:
 	double generateLuckEffect(int stages);
 	double generateMoodEffect(int stages);
 	double generateBuffEffect(int stages);
-	void updateEvent(int stages, aiPerson* person);	
+	void updateEvent(int stages, aiPerson* person, ai_event);	
 	void eventCausedByBuff(int stages);
 };
 
@@ -135,7 +143,7 @@ public:
 	enum ai_working {MEETING, MANUFACTURING, GROUPWORKING, EXPERIMENTING, CODING};
 	ai_working workingType;
 	std::vector<aiPerson*> collegue;
-	Working(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	Working(aiPerson* personA,std::vector<aiPerson*>& aiLists, aiTime* time);
 	void generateWorking();
 	void generateWorkingInterruptive();
 };
@@ -146,7 +154,7 @@ public:
 	enum ai_eating {BREAKFAST, LUNCH, SUPPER, SNACK};
 	ai_eating eatingType;
 	std::vector<aiPerson*> collegue;
-	Eating(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	Eating(aiPerson* personA,std::vector<aiPerson*>& aiLists, aiTime* time);
 	void generateEating();
 	void generateEatingInterruptive();
 };
@@ -154,10 +162,10 @@ public:
 class Resting:public aiEvents
 {
 public:
-	enum ai_resting {NAP, SLEEP, GAME, DRINKING, OVERSLEEP, };
+	enum ai_resting {NAP, SLEEP, GAME, DRINKING, OVERSLEEP};
 	ai_resting restingType;
 	std::vector<aiPerson*> collegue;
-	Resting(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	Resting(aiPerson* personA,std::vector<aiPerson*>& aiLists, aiTime* time);
 	void generateResting();
 	void generateRestingInterruptive();
 
@@ -169,7 +177,7 @@ public:
 	enum ai_fighting {ARGUE, DEBATE, TEAMFIGHT, DUEL}; //family, collegue, friend, opponenet
 	ai_fighting fightingType;
 	std::vector<aiPerson*> collegue;
-	Fighting(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	Fighting(aiPerson* personA,std::vector<aiPerson*>& aiLists, aiTime* time);
 	void generateFighting();
 	void generateFightingInterruptive();
 };
@@ -177,7 +185,10 @@ public:
 class Other:public aiEvents
 {
 public:
-	Other(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	enum ai_other {TRAVELINGTOWORK, SHOPPING, WANDERING, LOST};
+	ai_other otherType;
+	std::vector<aiPerson*> collegue;
+	Other(aiPerson* personA,std::vector<aiPerson*>& aiLists, aiTime* time);
 	void generateOther();
 	void generateOtherInterruptive();
 };
@@ -187,9 +198,9 @@ class aiPerson
 public:
 	aiPerson(int);
 	std::string name;
-	int* full;
 	int aiPersonality;               
 	int idNum;        //there is a one to one correspondence between name and idNum
+	aiTime* time;
 	aiDebuff* debuff;
 	ai_occupation occupation;
 	ai_mood aiMood;
@@ -198,7 +209,7 @@ public:
 	std::vector<aiEvents*> dailyEvents;
 	aiPerson(double x, double y,std::string name);
 	std::vector<Relation*> generateRelation(std::vector<aiPerson*>& npc);
-	Schedule* generateSchedule(std::vector<aiPerson*>& npc);
+	Schedule* generateSchedule(std::vector<aiPerson*>& npc, aiTime* time);
 
 
 	void updateBuff(int stages);
@@ -217,6 +228,8 @@ public:
 class aiEngine:public CanvasSystem
 {
 public:
+	aiTime* time;
+	CanvasTimer timer;
 	aiEngine();
 	std::vector<aiPerson*> aiList;
 	std::list<aiPerson*> aiListQueued;
@@ -227,8 +240,31 @@ public:
 	std::list<Schedule*> scheduleListQueued;
 	std::vector<aiEvents*> eventList;
 
+	void getTime();
 	bool initialize();
 	bool simulate();
 	bool end();
+
+	void preScheduleGenerator()
+	{
+		ai_schedule1.push_back(RESTING);   //6am
+		ai_schedule1.push_back(EATING);   //7am
+		ai_schedule1.push_back(OTHER);    //8am
+		ai_schedule1.push_back(WORKING);  //9am
+		ai_schedule1.push_back(WORKING);   //10am
+		ai_schedule1.push_back(WORKING);   //11am
+		ai_schedule1.push_back(EATING);   //12am
+		ai_schedule1.push_back(RESTING);  //1pm
+		ai_schedule1.push_back(WORKING);  //2pm
+		ai_schedule1.push_back(WORKING);  //3pm
+		ai_schedule1.push_back(WORKING);  //4pm
+		ai_schedule1.push_back(OTHER);    //5pm 
+		ai_schedule1.push_back(EATING);   //6pm
+		ai_schedule1.push_back(RESTING);   //7pm
+		ai_schedule1.push_back(RESTING);   //8pm
+		ai_schedule1.push_back(FIGHTING);   //9pm
+		ai_schedule1.push_back(RESTING);   //10pm
+	}
+
 };
 

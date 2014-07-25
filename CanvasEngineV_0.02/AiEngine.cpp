@@ -1,4 +1,3 @@
-
 #include "aiEngine.h"
 #include <iostream>
 #include <list>
@@ -74,72 +73,73 @@ Relation* aiRelation::generateRelation()
 
 ///////////////aiEvents///////////////////////
 
-aiEvents::aiEvents(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time)
+aiEvents::aiEvents(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time)
 {
 	aiList = aiLists;
-	eventTime = time;
+	this->time = time;
+	eventStage = this->time->hour-6;
 	personA = A;
 	checked = UNCHECKED;
 }
 
 std::vector<aiPerson*> aiEvents::generateEvent()
 {
-	if (personA->dailyEvents[eventTime]->eventType == NONE)
+	if (personA->dailyEvents[eventStage]->eventType == NONE)
 	{
-		eventType = ai_schedule1[eventTime];
+		eventType = ai_schedule1[eventStage];
 		if (eventType == EATING)
 		{			
-			Eating* eating = new Eating(personA,aiList, eventTime);
+			Eating* eating = new Eating(personA,aiList, time);
 			eating->eventType = EATING;
+			eating->time = time;
 			eating->generateEating();
 			for (int i = 0; i < eating->aiInvolved.size(); i++)
 			{
-				eating->personA = eating->aiInvolved[i];
-				aiList[eating->aiInvolved[i]->idNum]->dailyEvents[eventTime] = eating;
+				aiList[eating->aiInvolved[i]->idNum]->dailyEvents[eventStage] = eating;
 			}
 		}
 		else if (eventType == WORKING)
 		{
-			Working* working = new Working(personA,aiList, eventTime);
+			Working* working = new Working(personA,aiList, time);
 			working->eventType = WORKING;
+			working->time = time;
 			working->generateWorking();
 			for (int i = 0; i < working->aiInvolved.size(); i++)
 			{
-				working->personA = working->aiInvolved[i];
-				aiList[working->aiInvolved[i]->idNum]->dailyEvents[eventTime] = working;
+				aiList[working->aiInvolved[i]->idNum]->dailyEvents[eventStage] = working;
 			}
 		}
 		else if (eventType == RESTING)
 		{
-			Resting* resting = new Resting(personA,aiList, eventTime);
+			Resting* resting = new Resting(personA,aiList, time);
 			resting->generateResting();
 			resting->eventType = RESTING;
+			resting->time = time;
 			for (int i = 0; i < resting->aiInvolved.size(); i++)
 			{
-				resting->personA = resting->aiInvolved[i];
-				aiList[resting->aiInvolved[i]->idNum]->dailyEvents[eventTime] = resting;
+				aiList[resting->aiInvolved[i]->idNum]->dailyEvents[eventStage] = resting;
 			}
 		}
 		else if (eventType == FIGHTING)
 		{	
-			Fighting* fighting = new Fighting(personA,aiList, eventTime);
+			Fighting* fighting = new Fighting(personA,aiList, time);
 			fighting->generateFighting();
 			fighting->eventType = FIGHTING;
+			fighting->time = time;
 			for (int i = 0; i < fighting->aiInvolved.size(); i++)
 			{
-				fighting->personA = fighting->aiInvolved[i];
-				aiList[fighting->aiInvolved[i]->idNum]->dailyEvents[eventTime] = fighting;
+				aiList[fighting->aiInvolved[i]->idNum]->dailyEvents[eventStage] = fighting;
 			}
 		}
 		else if (eventType == OTHER)
 		{
-			Other* other = new Other(personA,aiList, eventTime);
+			Other* other = new Other(personA,aiList, time);
 			other->generateOther();
 			other->eventType = OTHER;
+			other->time = time;
 			for (int i = 0; i < other->aiInvolved.size(); i++)
 			{
-				other->personA = other->aiInvolved[i];
-				aiList[other->aiInvolved[i]->idNum]->dailyEvents[eventTime] = other;
+				aiList[other->aiInvolved[i]->idNum]->dailyEvents[eventStage] = other;
 			}
 		}
 	}
@@ -178,27 +178,23 @@ void aiEvents::eventCausedByBuff(int stages)
 		buffLabel = 5;
 	}
 
+	std::cout << "the dominating buff is " << buffLabel << std::endl;
+
 	if (max > 40)
 	{
 		if (buffLabel = 0) //ILL
 		{
-			if (rand() % 5 == 0)
-			{
-				(personA)->dailyEvents[stages]->eventType = RESTING;
-				updateEvent(stages, personA);
-			}
+			if (rand() % 3 == 0)
+				updateEvent(stages, personA, RESTING);
 		}
 		else if (buffLabel = 1)  //SLEEPY
 		{
-			if (rand() % 5 == 0)
-			{
-				(personA)->dailyEvents[stages]->eventType = EATING;
-				updateEvent(stages, personA);
-			}
+			if (rand() % 3 == 0)
+				updateEvent(stages, personA, );
 		}
 		else if (buffLabel = 2)  //HUNGRY
 		{
-			if (rand() % 5 == 0)        //20% possibility to change its objective
+			if (rand() % 3 == 0)        //20% possibility to change its objective
 			{
 				(personA)->dailyEvents[stages]->eventType = RESTING;
 				updateEvent(stages, personA);
@@ -206,12 +202,12 @@ void aiEvents::eventCausedByBuff(int stages)
 		}
 		else if (buffLabel = 3) //TIRED
 		{
-			if (rand() % 5 == 0)
+			if (rand() % 3 == 0)
 			{
 				(personA)->dailyEvents[stages]->eventType = RESTING;
 				updateEvent(stages, personA);
 			}
-			else if (rand() % 5 == 1)  
+			else if (rand() % 3 == 1)  
 			{ 
 				(personA)->dailyEvents[stages]->eventType = EATING;
 				updateEvent(stages, personA);
@@ -219,12 +215,12 @@ void aiEvents::eventCausedByBuff(int stages)
 		}
 		else if (buffLabel = 4) //OVERWORKED
 		{
-			if (rand() % 5 == 0)
+			if (rand() % 3 == 0)
 			{
 				(personA)->dailyEvents[stages]->eventType = RESTING;
 				updateEvent(stages, personA);
 			}
-			else if (rand() % 5 == 1)  
+			else if (rand() % 3 == 1)  
 			{ 
 				(personA)->dailyEvents[stages]->eventType = EATING;
 				updateEvent(stages, personA);
@@ -232,7 +228,7 @@ void aiEvents::eventCausedByBuff(int stages)
 		}
 		else if (buffLabel = 5)  //BEHINDSCHEDULE
 		{
-			if (rand() % 5 == 0)
+			if (rand() % 3 == 0)
 			{
 				(personA)->dailyEvents[stages]->eventType = WORKING;
 				updateEvent(stages, personA);
@@ -244,6 +240,9 @@ void aiEvents::eventCausedByBuff(int stages)
 void aiEvents::updateEvent(int stages, aiPerson* person)
 {
 	ai_event eventType = person->dailyEvents[stages]->eventType;
+	
+	std::cout << "alert!!!!!!!!!" <<std::endl;
+	std::cout << "change to eventType " << eventType << std::endl;
 
 	if (eventType != ai_schedule1[stages])   //reduece the aiInvolved by 1
 	{
@@ -256,41 +255,38 @@ void aiEvents::updateEvent(int stages, aiPerson* person)
 				break;
 			}
 		}
-
 		if (eventType ==  WORKING)   //generate new event for the ai
 		{
-			Working(person,aiList, (ai_time)stages).generateWorkingInterruptive();
+			Working(person,aiList, time).generateWorkingInterruptive();
 		}
 		else if (eventType == EATING)
 		{
-			 Eating(person,aiList, (ai_time)stages).generateEatingInterruptive();
+			 Eating(person,aiList, time).generateEatingInterruptive();
 		}
 		else if (eventType == RESTING)
 		{
-			Resting(person,aiList, (ai_time)stages).generateRestingInterruptive();
+			Resting(person,aiList, time).generateRestingInterruptive();
 		}
 		else if (eventType == FIGHTING)
 		{
-			Fighting(person,aiList, (ai_time)stages).generateFightingInterruptive();
+			Fighting(person,aiList, time).generateFightingInterruptive();
 		}
 		else if (eventType == OTHER)
 		{
-			 Other(person,aiList, (ai_time)stages).generateOtherInterruptive();
+			 Other(person,aiList, time).generateOtherInterruptive();
 		}
 	}
-
 }
-
-
 
 //////////////children classes////////////////////////
 
-Working::Working(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time):aiEvents(A,aiLists,time)
+Working::Working(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time):aiEvents(A,aiLists,time)
 {
 }
 
 void Working::generateWorking()
 {
+	std::cout << "generate working event" << std::endl;
 	workingType = (ai_working)(rand()%5);
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
@@ -309,8 +305,12 @@ void Working::generateWorking()
 	}
 	if (workingType == MANUFACTURING)
 	{
-		int randNum = rand() % collegue.size();
-		aiInvolved.push_back(collegue[randNum]);
+		int randNum1 = rand() % collegue.size();
+		int randNum2 = rand() % collegue.size();
+		while (randNum2 == randNum1)
+			randNum2 = rand() % collegue.size();
+		aiInvolved.push_back(aiList[randNum1]);
+		aiInvolved.push_back(aiList[randNum2]);
 		aiInvolved.push_back(personA);
 	}
 	if (workingType == GROUPWORKING)
@@ -332,6 +332,7 @@ void Working::generateWorking()
 
 void Working::generateWorkingInterruptive()
 {
+	std::wcout << "generate working Interruptive event " << std::endl;
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
 		if ((*it)->relations == COLLEGUE)
@@ -344,46 +345,45 @@ void Working::generateWorkingInterruptive()
 	}
 
 	int count = 0;
-	for (std::vector<aiPerson*>::iterator it = personA->dailyEvents[eventTime]->aiInvolved.begin(); it != personA->dailyEvents[eventTime]->aiInvolved.end(); it++)
+	for (std::vector<aiPerson*>::iterator it =collegue.begin(); it != collegue.end(); it++)
 	{
-		if ((*it)->dailyEvents[eventTime]->eventType == WORKING)
+		if ((*it)->dailyEvents[time->hour-6]->eventType == WORKING)
 		{
-			Working* working = static_cast<Working*>((*it)->dailyEvents[eventTime]);
+			Working* working = static_cast<Working*>((*it)->dailyEvents[time->hour-6]);
 			if (working->workingType != CODING)
 			{
-				(*it)->dailyEvents[eventTime]->aiInvolved.push_back(personA);             
-				personA->dailyEvents[eventTime] =(*it)->dailyEvents[eventTime];
+				(*it)->dailyEvents[time->hour-6]->aiInvolved.push_back(personA);             
+				personA->dailyEvents[time->hour-6] =(*it)->dailyEvents[time->hour-6];
 				break;
 			}
 			count++;
 		}
 	}
-	if (count == personA->dailyEvents[eventTime]->aiInvolved.size())
+	if (count == personA->dailyEvents[time->hour-6]->aiInvolved.size())
 	{
-		Working* working = new Working(personA,aiList,eventTime);
+		Working* working = new Working(personA,aiList,time);
 		working->workingType = CODING;
-		personA->dailyEvents[eventTime] = working;
-		personA->dailyEvents[eventTime]->aiInvolved.push_back(personA);
+		personA->dailyEvents[time->hour-6] = working;
+		personA->dailyEvents[time->hour-6]->aiInvolved.push_back(personA);
 	}
+	std::cout << "the generated working Interruptive event size is " << personA->dailyEvents[time->hour-6]->aiInvolved.size() << std::endl;
 }
 
-Eating::Eating(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time):aiEvents(A,aiLists,time)
+Eating::Eating(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time):aiEvents(A,aiLists,time)
 {
 }
 
 void Eating::generateEating()
 {
-	switch (eventTime)
-	{
-	case(EIGHTAM): eatingType = BREAKFAST;
-		break;
-	case(TWELVEAM): eatingType = LUNCH;
-		break;
-	case(SIXPM):eatingType = SUPPER;
-		break;
-	default:eatingType = SNACK;
-		break;
-	}
+	std::cout << "genereate eating event " << std::endl;
+	if (time->hour == 7)
+		eatingType = BREAKFAST;
+	else if (time->hour == 12)
+		eatingType = LUNCH;
+	else if (time->hour = 18)
+		eatingType = SUPPER;
+	else
+		eatingType = SNACK;
 
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
@@ -432,13 +432,11 @@ void Eating::generateEating()
 		aiInvolved.push_back(collegue[randNum]);
 		aiInvolved.push_back(personA);
 	}
-	std::cout << "ai is " << personA->idNum <<" aiInvolved are " << aiInvolved[0]->idNum << std::endl;
-	std::cout << "eating event" << std::endl;
-	std::cout << std::endl;
 }
 
 void Eating::generateEatingInterruptive()
 {
+	eventStage = time->hour-6;
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
 		if ((*it)->relations == FAMILY || (*it)->relations == FRIENDS || (*it)->relations == COLLEGUE)
@@ -451,57 +449,60 @@ void Eating::generateEatingInterruptive()
 	}
 
 	int count = 0;
-	for (std::vector<aiPerson*>::iterator it = personA->dailyEvents[eventTime]->aiInvolved.begin(); it != personA->dailyEvents[eventTime]->aiInvolved.end(); it++)
+	for (std::vector<aiPerson*>::iterator it = collegue.begin(); it != collegue.end(); it++)
 	{
-		if ((*it)->dailyEvents[eventTime]->eventType == EATING)
+		if ((*it)->dailyEvents[eventStage]->eventType == EATING)
 		{
-			Eating* eating = static_cast<Eating*>((*it)->dailyEvents[eventTime]);
+			Eating* eating = static_cast<Eating*>((*it)->dailyEvents[eventStage]);
 			
-			(*it)->dailyEvents[eventTime]->aiInvolved.push_back(personA);             
-			personA->dailyEvents[eventTime] =(*it)->dailyEvents[eventTime];
+			(*it)->dailyEvents[eventStage]->aiInvolved.push_back(personA);             
+			personA->dailyEvents[eventStage] =(*it)->dailyEvents[eventStage];
 			break;
 		}
 		count++;
 	}
-	if ((count == personA->dailyEvents[eventTime]->aiInvolved.size()))
+	if ((count == personA->dailyEvents[eventStage]->aiInvolved.size()))
 	{
-		Eating* eating = new Eating(personA,aiList,eventTime);
-		personA->dailyEvents[eventTime] = eating;
-		personA->dailyEvents[eventTime]->aiInvolved.push_back(personA);
+		Eating* eating = new Eating(personA,aiList,time);
+		personA->dailyEvents[eventStage] = eating;
+		personA->dailyEvents[eventStage]->aiInvolved.push_back(personA);
 
-		switch (eventTime)
-		{
-		case(EIGHTAM): eating->eatingType = BREAKFAST;
-			break;
-		case(TWELVEAM): eating->eatingType = LUNCH;
-			break;
-		case(SIXPM):eating->eatingType = SUPPER;
-			break;
-		default: eating->eatingType = SNACK;
-			break;
-		}
+	if (time->hour == 7)
+		eatingType = BREAKFAST;
+	else if (time->hour == 12)
+		eatingType = LUNCH;
+	else if (time->hour = 18)
+		eatingType = SUPPER;
+	else
+		eatingType = SNACK;
 	}
+	std::cout << "the generated eating Interruptive event size is " << personA->dailyEvents[time->hour-6]->aiInvolved.size() << std::endl;
+
 }
 
-Fighting::Fighting(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time):aiEvents(A,aiLists,time)
+Fighting::Fighting(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time):aiEvents(A,aiLists,time)
 {
 }
 
 void Fighting::generateFighting()
 {
-	switch (eventTime)
+	std::cout << "generating fighting event" << std::endl;
+	if (time->hour >= 9 && time->hour <= 17)
 	{
-	case(EIGHTAM): fightingType = ARGUE;
-		break;
-	case(SIXPM):fightingType = TEAMFIGHT;
-		break;
-	case(EIGHTPM):fightingType = ARGUE;
-		break;
-	case(TENPM):fightingType = ARGUE;
-		break;
-	default:fightingType = ARGUE;
-		break;
+		if (rand() % 2 == 0)
+			fightingType = ARGUE;
+		else
+			fightingType = DEBATE;
 	}
+	else if (time->hour > 17 && time->hour < 22)
+	{
+		if (rand() % 2 == 0)
+			fightingType = ARGUE;
+		else
+			fightingType = TEAMFIGHT;
+	}
+	else
+		fightingType = DUEL;
 
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
@@ -561,65 +562,70 @@ void Fighting::generateFighting()
 
 void Fighting::generateFightingInterruptive()
 {
-	int randNum = rand() % personA->dailyEvents[eventTime]->aiInvolved.size();
-	while (personA->dailyEvents[eventTime]->aiInvolved[randNum] == personA)
+	std::cout << "generaete fighting event" << std::endl;
+	eventStage = time->hour - 6;
+
+	int randNum = rand() % personA->dailyEvents[eventStage]->aiInvolved.size();
+	while (personA->dailyEvents[eventStage]->aiInvolved[randNum] == personA)
 	{
-		randNum = rand() % personA->dailyEvents[eventTime]->aiInvolved.size();
+		randNum = rand() % personA->dailyEvents[eventStage]->aiInvolved.size();
 	}
 
-	if (personA->dailyEvents[eventTime]->aiInvolved.size() > 1)
+	if (personA->dailyEvents[eventStage]->aiInvolved.size() > 1)
 	{
-		for (std::vector<aiPerson*>::iterator it = personA->dailyEvents[eventTime]->aiInvolved.begin(); it != personA->dailyEvents[eventTime]->aiInvolved.end(); it++)
+		Fighting* fighting = new Fighting(personA, aiList, time);
+		fighting->fightingType = ARGUE;
+		fighting->aiInvolved.push_back(personA);
+
+		for (std::vector<aiPerson*>::iterator it = personA->dailyEvents[eventStage]->aiInvolved.begin(); it != personA->dailyEvents[eventStage]->aiInvolved.end(); it++)
 		{
 			if ((*it)==personA)
 			{
-				personA->dailyEvents[eventTime]->aiInvolved.erase(it);
-				it = personA->dailyEvents[eventTime]->aiInvolved.begin();
+				personA->dailyEvents[eventStage]->aiInvolved.erase(it);
+				it = personA->dailyEvents[eventStage]->aiInvolved.begin();
 			}
-			if ((*it)==personA->dailyEvents[eventTime]->aiInvolved[randNum])
+			else if ((*it)==personA->dailyEvents[eventStage]->aiInvolved[randNum])
 			{
-				personA->dailyEvents[eventTime]->aiInvolved.erase(it);
-				it = personA->dailyEvents[eventTime]->aiInvolved.begin();
+				fighting->aiInvolved.push_back(personA->dailyEvents[eventStage]->aiInvolved[randNum]);
+				personA->dailyEvents[eventStage]->aiInvolved.erase(it);
+				it = personA->dailyEvents[eventStage]->aiInvolved.begin();
 			}
 		}
-
-		Fighting* fighting = new Fighting(personA, aiList, eventTime);
-		fighting->fightingType = ARGUE;
-		fighting->aiInvolved.push_back(personA);
-		fighting->aiInvolved.push_back(personA->dailyEvents[eventTime]->aiInvolved[randNum]);
-		personA->dailyEvents[eventTime] = fighting;
-		personA->dailyEvents[eventTime]->aiInvolved[randNum]->dailyEvents[eventTime] = fighting;
+		personA->dailyEvents[eventStage] = fighting;
+		personA->dailyEvents[eventStage]->aiInvolved[1]->dailyEvents[eventStage] = fighting;
 	}
 	else
 	{
-		Fighting* fighting = new Fighting(personA, aiList, eventTime);
+		Fighting* fighting = new Fighting(personA, aiList, time);
 		fighting->fightingType = ARGUE;
 		fighting->aiInvolved.push_back(personA);
-		personA->dailyEvents[eventTime] = fighting;
+		personA->dailyEvents[eventStage] = fighting;
 	}
 
 }
 
-Resting::Resting(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time):aiEvents(A,aiLists,time)
+Resting::Resting(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time):aiEvents(A,aiLists,time)
 {
 }
 
 void Resting::generateResting()
 {
-	switch (eventTime)
+	std::cout << "generate Resting event" << std::endl;
+	if (time->hour == 6 || time->hour == 10)
+		restingType = SLEEP;
+	else if (time->hour == 7)
+		restingType = OVERSLEEP;
+	else
 	{
-	case(EIGHTAM): restingType = OVERSLEEP;
-		break;
-	case(SIXPM):restingType = DRINKING;
-		break;
-	case(EIGHTPM):restingType = GAME;
-		break;
-	case(TENPM):restingType = SLEEP;
-		break;
-	default:restingType = NAP;
-		break;
+		int randNum = rand() % 3;
+		if (randNum == 0)
+			restingType = NAP;
+		else if (randNum == 0)
+			restingType = GAME;
+		else
+			restingType = DRINKING;
 	}
-
+		
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
 		if (((*it)->relations == FRIENDS || (*it)->relations == FAMILY) && (restingType == DRINKING || restingType == GAME))
@@ -630,7 +636,7 @@ void Resting::generateResting()
 				collegue.push_back((*it)->A);
 		}
 	}
-
+	
 	if (restingType == NAP || restingType == OVERSLEEP || restingType == SLEEP)
 		collegue.push_back(personA);
 	
@@ -652,23 +658,19 @@ void Resting::generateResting()
 		aiInvolved.push_back(collegue[randNum]);
 		aiInvolved.push_back(personA);
 	}
+	
+	std::cout << "generate event complete " << std::endl;
 }
 
 void Resting::generateRestingInterruptive()
 {
+	eventStage = time->hour - 6;
 	std::vector<aiPerson*> collegue1;
 	std::vector<aiPerson*> collegue2;
 	std::vector<aiPerson*> collegue3;
 	for (std::vector<Relation*>::iterator it = personA->relationList.begin(); it != personA->relationList.end(); it++)
 	{
-		if ((*it)->relations == FRIENDS)
-		{
-			if ((*it)->A == personA)
-				collegue1.push_back((*it)->B);
-			else if ((*it)->B == personA)
-				collegue1.push_back((*it)->A);
-		}
-		if ((*it)->relations == COLLEGUE)
+		if ((*it)->relations == COLLEGUE || (*it)->relations == FRIENDS)
 		{
 			if ((*it)->A == personA)
 				collegue2.push_back((*it)->B);
@@ -683,50 +685,64 @@ void Resting::generateRestingInterruptive()
 				collegue3.push_back((*it)->A);
 		}
 	}
-	if (eventTime >= TENAM && eventTime <= SIXPM)
+	if (eventStage <= 14 && eventStage > 3)
 	{
 		int count = 0;
 		for (std::vector<aiPerson*>::iterator it = collegue2.begin(); it != collegue2.end(); it++)
 		{
-			if ((*it)->dailyEvents[eventTime]->eventType == RESTING)
+			if ((*it)->dailyEvents[eventStage]->eventType == RESTING)
 			{
-				Resting* resting = static_cast<Resting*>((*it)->dailyEvents[eventTime]);
+				Resting* resting = static_cast<Resting*>((*it)->dailyEvents[eventStage]);
 				if (resting->restingType != NAP && resting->restingType != SLEEP && resting->restingType != OVERSLEEP)
 				{
-					(*it)->dailyEvents[eventTime]->aiInvolved.push_back(personA);             
-					personA->dailyEvents[eventTime] =(*it)->dailyEvents[eventTime];
+					(*it)->dailyEvents[eventStage]->aiInvolved.push_back(personA);             
+					personA->dailyEvents[eventStage] =(*it)->dailyEvents[eventStage];
+					count++;
 					break;
 				}
 			}
 		}
-		count++;
-		if (count == personA->dailyEvents[eventTime]->aiInvolved.size())
+		if (count == personA->dailyEvents[eventStage]->aiInvolved.size())
 		{
-			Resting* resting = new Resting(personA, aiList, eventTime);
+			Resting* resting = new Resting(personA, aiList, time);
 			resting->restingType = NAP;
-			personA->dailyEvents[eventTime]->aiInvolved.push_back(personA);
+			personA->dailyEvents[eventStage]->aiInvolved.push_back(personA);
 		}
 	}
 	else
 	{
 		for (std::vector<aiPerson*>::iterator it = collegue3.begin(); it != collegue3.end(); it++)
 		{
-			if ((*it)->dailyEvents[eventTime]->eventType == RESTING)
+			if ((*it)->dailyEvents[eventStage]->eventType == RESTING)
 			{
-				(*it)->dailyEvents[eventTime]->aiInvolved.push_back(personA);             
-				personA->dailyEvents[eventTime] =(*it)->dailyEvents[eventTime];
+				(*it)->dailyEvents[eventStage]->aiInvolved.push_back(personA);             
+				personA->dailyEvents[eventStage] =(*it)->dailyEvents[eventStage];
 				break;
 			}
 		}
 	}
 }
 
-Other::Other(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time):aiEvents(A,aiLists,time)
+Other::Other(aiPerson* A,std::vector<aiPerson*>& aiLists, aiTime* time):aiEvents(A,aiLists,time)
 {
 }
 
 void Other::generateOther()
 {
+	std::cout << "generate other event" << std::endl;
+	if (time->hour == 8 || time->hour == 17)
+		otherType == TRAVELINGTOWORK;
+	else
+	{
+		int randNum = rand() % 3;
+		if (randNum == 0)
+			otherType = SHOPPING;
+		else if (randNum == 0)
+			otherType = WANDERING;
+		else
+			otherType = LOST;
+	}
+	aiInvolved.push_back(personA);
 }
 
 void Other::generateOtherInterruptive()
@@ -764,6 +780,9 @@ void aiEvents::generateEffect(int stages)
 			personA->dailyEvents[stages]->checked = CHECKED;
 		}
 	}
+	std::cout << std::endl;
+	std::cout << "event is completed or not " << personA->dailyEvents[stages]->completed << std::endl;
+	std::cout << std::endl;
 }
 
 double aiEvents::generatePersonalityEffect(int stages)
@@ -943,8 +962,9 @@ double aiEvents::generateMoodEffect(int stages)
 
 double aiEvents::generateLuckEffect(int stages)
 {
-	std::cout << "possibilities generated by Luck " << 100 << std::endl;
-	return 100;
+	int possibilities = rand() & 25 + 50;
+	std::cout << "possibilities generated by Luck " << possibilities << std::endl;
+	return possibilities;
 }
 
 double aiEvents::generateBuffEffect(int stages)
@@ -1004,18 +1024,19 @@ aiPerson::aiPerson(int number)
 {
 	this->name = ai_name(rand()%8);
 	idNum = number;
+
 	int i = 0;
-	srand((unsigned) time(0));
-	while (i < 3)
+	int j = 1;
+	while (i < 7)
 	{
-		if (rand() % 2 != 0)
-			aiPersonality = aiPersonality|(ai_personality)(rand()%6 + i);
+		if (rand() % 4 == 0)
+			aiPersonality = aiPersonality| ((ai_personality)j);	
+		j *= 2;
 		i++;
 	}
 
-	aiMood = (ai_mood) (rand() % 10);
-	full =  new int[8];
 
+	aiMood = (ai_mood) (rand() % 13);
 	aiSchedule = new Schedule;
 	debuff = new aiDebuff;
 	
@@ -1036,38 +1057,35 @@ void aiPerson::updateBuff(int stages)
 	std::cout << "into updateBuff " << std::endl;
 	std::cout << "updating..." << std::endl;
 
-	if (stages != 0)
+	if (dailyEvents[stages]->completed)
 	{
-		if (dailyEvents[stages-1]->completed)
+		if (debuff->BEHINDSCHEDULE > 50)
 		{
-			if (debuff->BEHINDSCHEDULE > 50)
-			{
-				debuff->BEHINDSCHEDULE -= 10;
-				debuff->TIRED += 10;           //finish an event on time when PROCASTINATING casued TIRED
-			}
-			if (stages != 1)
-			{
-				if (dailyEvents[stages-2]->eventType == WORKING && dailyEvents[stages-1]->eventType == WORKING)
-					debuff->OVERWORKED += 10;     // have working 2 in a row cause OVERWORKED
-			}
-			if (dailyEvents[stages-1]->eventType == RESTING)
-				debuff->TIRED -= 10;             // clear TIRED if RESTING is completed
-			if (dailyEvents[stages-1]->eventType == FIGHTING)
-				debuff->ILL += 10;          //hurt by FIGHTING
-			if (dailyEvents[stages-1]->eventType == EATING)
-				debuff->HUNGRY -= 10;
+			debuff->BEHINDSCHEDULE -= 10;
+			debuff->TIRED += 10;           //finish an event on time when PROCASTINATING casued TIRED
 		}
-		else
+		if (stages > 0)
 		{
-			if (dailyEvents[stages-1]->eventType == WORKING)
-				debuff->BEHINDSCHEDULE += 10;
-			if (dailyEvents[stages-1]->eventType == RESTING)
-				debuff->TIRED += 10;             
-			if (dailyEvents[stages-1]->eventType == FIGHTING)
-				debuff->ILL += 10;          
-			if (dailyEvents[stages-1]->eventType == EATING)
-				debuff->HUNGRY += 10;
+			if (dailyEvents[stages-1]->eventType == WORKING && dailyEvents[stages]->eventType == WORKING)
+				debuff->OVERWORKED += 10;     // have working 2 in a row cause OVERWORKED
 		}
+		if (dailyEvents[stages]->eventType == RESTING)
+			debuff->TIRED -= 10;             // clear TIRED if RESTING is completed
+		if (dailyEvents[stages]->eventType == FIGHTING)
+			debuff->ILL += 10;          //hurt by FIGHTING
+		if (dailyEvents[stages]->eventType == EATING)
+			debuff->HUNGRY -= 10;
+	}
+	else
+	{
+		if (dailyEvents[stages]->eventType == WORKING)
+			debuff->BEHINDSCHEDULE += 20;
+		if (dailyEvents[stages]->eventType == RESTING)
+			debuff->TIRED += 10;             
+		if (dailyEvents[stages]->eventType == FIGHTING)
+			debuff->ILL += 20;          
+		if (dailyEvents[stages]->eventType == EATING)
+			debuff->HUNGRY += 10;
 	}
 	std::cout << "show Buff... " << std::endl;
 	std::cout << "debuff behindschedule " << debuff->BEHINDSCHEDULE << std::endl;
@@ -1095,14 +1113,14 @@ std::vector<Relation*> aiPerson::generateRelation(std::vector<aiPerson*>& npc)
 	return relationList;
 }
 
-Schedule* aiPerson::generateSchedule(std::vector<aiPerson*>& npc)
+Schedule* aiPerson::generateSchedule(std::vector<aiPerson*>& npc,aiTime* time)
 {
-	for(int i = 0; i <= TENPM; i++)
-	{
-		if (dailyEvents[i]->eventType == NONE)
-		{
-			aiEvents(this,npc,(ai_time)i).generateEvent();
-		}
+	if (dailyEvents[time->hour-6]->eventType == NONE)
+	{	
+		aiEvents(this,npc,time).generateEvent();
+		std::cout << "generate eventType is " << this->dailyEvents[time->hour-6]->eventType << std::endl;
+		std::cout << "person " << this->idNum << std::endl;
+		std::cout << "person aiInvolved " << this->dailyEvents[time->hour-6]->aiInvolved.size() << std::endl;
 	}
 
 	//copy(dailyEvents.begin(),dailyEvents.end(), aiSchedule->eventList.begin());
@@ -1112,27 +1130,23 @@ Schedule* aiPerson::generateSchedule(std::vector<aiPerson*>& npc)
 	aiSchedule->eventList = dailyEvents;
 	aiSchedule->id = this->idNum;
 	aiSchedule->person = this;
-	std::cout << std::endl;
 	return aiSchedule;
 }
 
 ////////////////////aiEngine//////////////////////////////////
-aiEngine::aiEngine():CanvasSystem
+aiEngine::aiEngine():CanvasSystem()
 {
+	time = new aiTime;
+	time->day = 0;
+	time->hour = 6;
+	time->min = 0;
+	time->sec = 0;
 }
 
 bool aiEngine::initialize()
 {
-	std::cout << "initialize begins..." <<std::endl;
-	ai_schedule1.push_back(EATING);
-	ai_schedule1.push_back(WORKING);
-	ai_schedule1.push_back(EATING);
-	ai_schedule1.push_back(WORKING);
-	ai_schedule1.push_back(WORKING);
-	ai_schedule1.push_back(EATING);
-	ai_schedule1.push_back(RESTING);
-	ai_schedule1.push_back(RESTING);
-
+	std::cout << "initialize begins..." <<std::endl;	
+	preScheduleGenerator();
 	//generate aiPerson
 	int i = 0;
 	while (i < aiSize)
@@ -1142,79 +1156,106 @@ bool aiEngine::initialize()
 		i++;
 	}
 	std::cout << "person generator ends" << std::endl;
-
 	std::cout << "aiRelation generator begins..." << std::endl;
+	
 	//generate aiRelation
 	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
 	{
 		relationList.push_back((*it)->generateRelation(aiList));
 	}
 	std::cout << "aiRelation generator ended" << std::endl;
-
 	std::cout << "aiPerson generator begins..." << std::endl;
+	
 	//initialize all events
 	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
 	{	
-		aiEvents* aievent = new aiEvents((*it),aiList,TENPM);
+		aiEvents* aievent = new aiEvents((*it),aiList,time);
 		aievent->eventType = NONE;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 17; i++)
 		{
 			(*it)->dailyEvents.push_back(aievent);
 		}
 	}
-	//generate all events and schedules
-	i = 0;
-	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
-	{
-		scheduleListPre.push_back((*it)->generateSchedule(aiList));
-		i++;
-	}
-
-	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
-	{
-		std::cout << std::endl;
-		for (int i = 0; i < 8; i++)
-		{
-			std::cout << "eventType is " << (*it)->dailyEvents[i]->eventType << std::endl;
-		}
-	}
-	
+	std::cout << "aiPerson generator ends..." << std::endl;
 	return true;
-
 }
 
 bool aiEngine::simulate()
 {
 
 	std::cout << std::endl;
-	std::cout << "simulate begins " << std::endl;
-	CanvasTimer timer = CanvasTimer();
-	timer.beginFrame();
-	int day = 0;
-	int time = 0;
-	do
+	std::cout << "simulate begins... " << std::endl;
+	std::cout << "Timer starts..." << std::endl;
+
+	std::cout << "Time is..." << std::endl;
+	std::cout << "Day " << time->day <<std::endl;
+	std::cout << "Hour " << time->hour <<std::endl;
+	std::cout << "Min " << time->min <<std::endl;
+	std::cout << "Sec " << time->sec <<std::endl;
+	std::cout << std::endl;
+		
+	int stage = time->hour-6;
+		
+	//generate event
+	std::cout << "generate event for each person..." << std::endl;
+	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
 	{
-		for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
-		{
-			std::cout << std::endl;
-			std::cout << "person " << (*it)->idNum << " simulate begins..." << std::endl;
-			for (int i = 0; i < 8; i++)
-			{
-				(*it)->dailyEvents[i]->generateEffect(i);
-				(*it)->updateBuff(i);
-				(*it)->dailyEvents[i]->eventCausedByBuff(i);
-			}
-		}
-		time = timer.getDeltaTime()/90000;
-		while (time < 1)
-		{
+		scheduleListPre.push_back((*it)->generateSchedule(aiList, time));
+	}	
+	std::cout << "generate event end..." << std::endl;
 
-		}
-
-	while ()
-	day += timer.getDeltaTime()/90000;
-
+	//generate interuptiveEvents and debuffs
+	std::cout << "generate interruptiveEvents and debuffs begin..." << std::endl;
+	for (std::vector<aiPerson*>::iterator it = aiList.begin(); it != aiList.end(); it++)
+	{
+		(*it)->dailyEvents[stage]->generateEffect(stage);
+		(*it)->updateBuff(stage);
+		(*it)->dailyEvents[stage]->personA = (*it);  //very important, make sure we are operating on the right person
+		                                             //needs improvement
+		(*it)->dailyEvents[stage]->eventCausedByBuff(stage);
+	}
+	std::cout << "generate interruptiveEvents and debuffs ends..." << std::endl;
+	
+	getTime();
+	while (stage == time->hour)
+	{
+		getTime();
+	}
+	std::cout << "move to next stage" << std::endl;
+	std::cout << std::endl;
 	return true;
+}
+
+void aiEngine::getTime()
+{
+	if (time->hour >= 23)
+	{
+		time->hour = 6;
+		time->min = 0;
+		time->sec = 0;
+		time->day += 1;
+	}
+
+	unsigned int overallTime = timer.getDeltaTime();
+	time->day += overallTime/90000;
+	time->hour += (overallTime % 90000) % (90000/24);
+	time->day += (overallTime - 90000* time->day - (90000/24)*time->hour)/(90000/24/60);
+	time->sec += (overallTime - 90000* time->day - (90000/24)*time->hour - (90000/24/60)*time->min)/(90000/24/60/60);
+	while (time->sec >= 60)
+	{
+		time->min++;
+		time->sec -= 60;
+	}
+	while (time->min >= 60)
+	{
+		time->hour++;
+		time->min -= 60;
+	}
+	while (time->hour >= 24)
+	{
+		time->day++;
+		time->hour -= 24;
+	}
 }
 
 bool aiEngine::end()

@@ -9,6 +9,8 @@
 #include "GUIassets.h"
 #include <string>
 #include "physicsShape.h"
+#include <iostream>
+#include "AiEngine.h"
 
 
 
@@ -117,7 +119,9 @@ void close()
 
 int main(int argc, char* argv[])
 {
-	
+	aiEngine aiEngineVersion1 = aiEngine();
+	aiEngineVersion1.initialize();
+
 	if(Init())
 	{
 		physicsEngine engine;
@@ -155,6 +159,7 @@ int main(int argc, char* argv[])
 		engine.addObject(&c);
 		while(!quit)
 		{
+			aiEngineVersion1.simulate();
 			SDL_Event e;
 			while(SDL_PollEvent(&e))
 			{
@@ -165,6 +170,12 @@ int main(int argc, char* argv[])
 			engine.render();
 			SDL_RenderPresent(mainRenderer);
 		}
+	
+	}
+
+
+
+
 		/*
 		editorGUI* editor = new editorGUI();
 		CanvasEngine* engine = new CanvasEngine();
@@ -175,7 +186,7 @@ int main(int argc, char* argv[])
 			engine->render();
 		}
 		*/
-	}
+
 	
 	/*
 	if(Init())
