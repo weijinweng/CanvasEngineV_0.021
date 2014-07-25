@@ -67,6 +67,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AiEngine.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GUIassets.cpp" />
@@ -76,6 +77,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AiEngine.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="CanvasEngine.h" />
     <ClInclude Include="Engine.h" />

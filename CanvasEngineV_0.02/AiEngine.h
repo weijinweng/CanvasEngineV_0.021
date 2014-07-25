@@ -1,16 +1,24 @@
 #pragma once
+#include <stdlib.h>
 #include <iostream>
 #include <list>
 #include <vector>
 #include <string>
 #include <random>
-#include <stdlib.h>
 #include <time.h>
 
-enum ai_event {DESIGN, MEETING, CODING ,EXPERIMENT,WORK, PREPAREMEAL,TAKEBUS, TALK, BREAKFAST, LUNCH, DINNER, OUTING, ARGUE, FIGHTING,FIRED, INTERVIEWING, THEFT, ROBBERY, REST}; //pls add some more stuff into the event enum
+
+enum ai_event {WORKING, EATING, RESTING, FIGHTING, OTHER, NONE};
 enum ai_name {Alex, Alexander, Aristotle, Blackberry, Carols, Dummy, Eagle, DrPepper};
-enum ai_relation {ENEMY,HOSTILITY,NOTGOOD, STRANGER, ACQUAINTANCE, FRIENDS, LOVERS};
+enum ai_relation {STRANGER, COLLEGUE, ACQUAINTANCE, FAMILY, FRIENDS, LOVERS};
+enum ai_friendship {OPPONENT,UNFRIENDLY,NOTGOOD, JUSTSOSO, NOTBAD, FRIENDLY, BROTHER}; 
 enum ai_time {EIGHTAM, TENAM, TWELVEAM, TWOPM, FOURPM, SIXPM, EIGHTPM, TENPM}; 
+
+class aiPerson;
+class aiRelation;
+class aiEvents;
+
+enum ai_check {CHECKED, UNCHECKED};
 
 enum ai_occupation {
 	STUDENT = 1 << 0,
@@ -23,8 +31,7 @@ enum ai_occupation {
 	DOCTOR = 1 << 7,
 	LAWYER = 1 << 8,
 	PEER = 1 << 9,
-	COLLEGUE = 1 << 10,
-	BOSS = 1 << 11
+	BOSS = 1 << 10
 }; 
 
 enum ai_personality {
@@ -40,8 +47,8 @@ enum ai_personality {
 
 enum ai_mood{
 	OUTRAGEOUS,
-	ANGRY,
 	DESPARATE,
+	ANGRY,
 	ANXIOUS,
 	SAD,
 	UNHAPPY,
@@ -51,44 +58,30 @@ enum ai_mood{
 	HAPPY,
 	HILAROUS,
 	CONFIDENT,
-	PROUD,
 	CRAZY
 };
 
-enum negativeBuff
+struct aiDebuff
 {
-	ILL = 1 << 0,
-	SLEEPY = 1 << 1,
-	HUNGRY = 1 << 2,
-	TIRED = 1 << 3,
-	OVERWORKED = 1 << 4,
-	PROCASTINATING = 1 << 5,
-	NONE = 1 << 6
+	int ILL;
+	int SLEEPY;
+	int HUNGRY;
+	int TIRED;
+	int OVERWORKED;
+	int BEHINDSCHEDULE;
 };
 
 const int aiSize = 50;
- 
-//event struct
-struct Events
-{
-	aiPerson* A;
-	aiPerson* B;
-	ai_event aievents;
-	ai_time aitime;
-	int id;
-	int relationId;  //the relation id is  the same as the relation id in the relation class. there is a one to one correspondence to the relation
-	bool completed;  //whether or not the event(objcetive is completeed on time
-	bool checked;    //whether the event remains to be not inflenced by the interruptive events
-	int possibility;
-};
 
-//relation struct
+static std::vector<ai_event> ai_schedule1;   //defined in aiEngine class as a primitive one which will be altered later
+
 struct Relation
 {
 	int heart;
 	aiPerson* A;
 	aiPerson* B;
 	ai_relation relations;
+	ai_friendship friendship;
 	int id;
 };
 
@@ -96,56 +89,120 @@ struct Schedule
 {
 	int id;
 	aiPerson* person;
-	std::vector<Events*> eventList;
+	std::vector<aiEvents*> eventList;
 };
 
 class Math
 {
 public:
+	Math();
 	int min(int a, int b);
 	int max(int a, int b);
 	int abs(int a , int b);
 };
 
-
-class aiEvent
+class aiEvents
 {
 public:
-	ai_time time;
+	aiEvents(aiPerson* A,std::vector<aiPerson*>& aiLists, ai_time time);
+	ai_event eventType;
+	ai_time eventTime;
 	aiPerson* personA;
-	aiPerson* personB;
+	std::vector<aiEvents*> eventList;
+	std::vector<aiPerson*> aiInvolved;
 	std::vector<aiPerson*> aiList;
-	aiEvent(aiPerson* now, std::vector<aiPerson*> npcList,ai_time aitime);   //initialize the event class  
-	Events* generateEvent(std::vector<Events*> eventList, int k);    //generate the event between A and B    and output the event in the form of string
+	std::vector<ai_friendship> friendshipList;
+	int eventId;
+	int possibility;
+	bool completed;  //whether or not the event(objcetive is completeed on time
+	ai_check checked;    //whether the event remains to be not inflenced by the interruptive events
+	
+	std::vector<aiPerson*> generateEvent();
+
+	void generateEffect(int stages);
+	double generatePersonalityEffect(int stages); 
+	double generateFriendshipEffect(int stages); 
+	double generateLuckEffect(int stages);
+	double generateMoodEffect(int stages);
+	double generateBuffEffect(int stages);
+	void updateEvent(int stages, aiPerson* person);	
+	void eventCausedByBuff(int stages);
 };
 
-class aiInterruptiveEvent:aiEvent
+class Working:public aiEvents
 {
 public:
-	aiPerson* personC;
-	void updateEvent();
+	enum ai_working {MEETING, MANUFACTURING, GROUPWORKING, EXPERIMENTING, CODING};
+	ai_working workingType;
+	std::vector<aiPerson*> collegue;
+	Working(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	void generateWorking();
+	void generateWorkingInterruptive();
 };
 
-/////////////////////////////////////////////////////////////////
-//the logic of how different factors affect the daily schedules//
-/////////////////////////////////////////////////////////////////
-class aiSchedule
+class Eating:public aiEvents
 {
 public:
-	aiSchedule(aiPerson* personA, std::vector<aiPerson*> npcList,std::vector<Events*> eventList);
-	std::vector<aiPerson*> aiList;
-	std::vector<Events*> eventList;
-	Schedule* aiSchedules;
+	enum ai_eating {BREAKFAST, LUNCH, SUPPER, SNACK};
+	ai_eating eatingType;
+	std::vector<aiPerson*> collegue;
+	Eating(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	void generateEating();
+	void generateEatingInterruptive();
+};
 
-	//Lock lock;   //determine which generateEffect function has the authorization to run
-	Schedule* generateSchedulePre();   //objectives
-	Schedule* generateScheduleAft();   //edited objectives, be influenced by interrupted events
-	void generatePersonalityEffect(int stages); //influence the schedule according to thte factor
-	void generateRelationEffect(int stages);    //it returns false to show that other factors has already effected the event while true means it has effect on the event
-	void generateLuckEffect(int stages);
-	void generateMoodEffect(int stages);
-	void generateBuffEffect(int stages);
-	//bool generator(ai_factor aiFactors, int stages);   //the generator return true if the event has already been influenced by factors
+class Resting:public aiEvents
+{
+public:
+	enum ai_resting {NAP, SLEEP, GAME, DRINKING, OVERSLEEP, };
+	ai_resting restingType;
+	std::vector<aiPerson*> collegue;
+	Resting(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	void generateResting();
+	void generateRestingInterruptive();
+
+};
+
+class Fighting:public aiEvents
+{
+public:
+	enum ai_fighting {ARGUE, DEBATE, TEAMFIGHT, DUEL}; //family, collegue, friend, opponenet
+	ai_fighting fightingType;
+	std::vector<aiPerson*> collegue;
+	Fighting(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	void generateFighting();
+	void generateFightingInterruptive();
+};
+
+class Other:public aiEvents
+{
+public:
+	Other(aiPerson* personA,std::vector<aiPerson*>& aiLists, ai_time time);
+	void generateOther();
+	void generateOtherInterruptive();
+};
+
+class aiPerson
+{
+public:
+	aiPerson(int);
+	std::string name;
+	int* full;
+	int aiPersonality;               
+	int idNum;        //there is a one to one correspondence between name and idNum
+	aiDebuff* debuff;
+	ai_occupation occupation;
+	ai_mood aiMood;
+	Schedule* aiSchedule;
+	std::vector<Relation*> relationList;
+	std::vector<aiEvents*> dailyEvents;
+	aiPerson(double x, double y,std::string name);
+	std::vector<Relation*> generateRelation(std::vector<aiPerson*>& npc);
+	Schedule* generateSchedule(std::vector<aiPerson*>& npc);
+
+
+	void updateBuff(int stages);
+
 };
 
 class aiRelation
@@ -153,49 +210,25 @@ class aiRelation
 public:
 	aiPerson* personA;
 	aiPerson* personB;
-	aiRelation(aiPerson* A, aiPerson* B);   //takes into two Person
-	//Relation* relationship;
+	aiRelation(aiPerson* A, aiPerson* B);   
 	Relation* generateRelation();
 };
 
-
-class aiPerson
+class aiEngine
 {
 public:
-	//lack vector2D class
-	Schedule* personSchedule;
-	bool eventStatus;  //whether the ai has an event
-	std::vector<Relation*> relations;   //relation lists that relate to personA(this);
-	ai_mood aiMood;
-	int debuff;   //it is a product of the interruptive events. Toghether with the ai_mood,it helps decide how the other objectives proceed
-	int aiPersonality;
-	ai_occupation occupation;
-	std::string name;                 
-	int idNum;        //there is a one to one correspondence between name and idNum
-	aiPerson(double x, double y,std::string name);
-	void getSchedulePre(std::vector<aiPerson*> npc,std::vector<Events*> eventList);   //use the aiEvent::generateEvent() and assign the event into personEvents
-	void getScheduleAft(std::vector<aiPerson*> npc,std::vector<Events*> eventList);
-	void getRelation(std::vector<aiPerson*> npc);     //use the aiRelation::gnerateRelation() and assign the event into the vector
-	//bool full;            //indicate whether its schedule is full or not
-	int* full;
-};
-
-class AiEngine
-{
-public:
-	AiEngine(void);
+	aiEngine();
 	std::vector<aiPerson*> aiList;
 	std::list<aiPerson*> aiListQueued;
-	std::vector<std::vector<Relation*>> relationList;
-	std::vector<std::vector<Relation*>> relationListQueued;
+	std::vector<std::vector<Relation*> > relationList;
+	std::vector<std::vector<Relation*> > relationListQueued;
 	std::vector<Schedule*> scheduleListPre;
 	std::vector<Schedule*> scheduleListAft;
 	std::list<Schedule*> scheduleListQueued;
-	std::vector<Events*> eventList;
+	std::vector<aiEvents*> eventList;
 
-	void initialize();
-	void simulate();
-	void end();
-	void getAllEvents();
-	~AiEngine(void);
+	bool initialize();
+	bool simulate();
+	bool end();
 };
+
