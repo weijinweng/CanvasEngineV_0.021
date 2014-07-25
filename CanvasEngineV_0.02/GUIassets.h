@@ -11,7 +11,7 @@
 
 class editorGUI;
 class World;
-class aiEngine;
+class AiEngine;
 
 static struct buttonTextures{
 	bool init;
@@ -52,7 +52,7 @@ public:
 class aiRenderTab:public tab
 {
 public:
-	aiEngine* ai;
+	AEngine* ai;
 	void generateGraphic();
 	
 };
