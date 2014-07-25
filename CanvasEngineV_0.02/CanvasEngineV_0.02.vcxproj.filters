@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\physicsEngine">
+      <UniqueIdentifier>{9351c95b-4bf9-48b1-9ec2-e1b03ef9fd90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -50,9 +53,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="physicsEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CanvasEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -62,11 +62,14 @@
     <ClInclude Include="Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="physicsEngine.h">
+      <Filter>Header Files\physicsEngine</Filter>
+    </ClInclude>
     <ClInclude Include="physicsShape.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\physicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="physicsManifold.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\physicsEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
