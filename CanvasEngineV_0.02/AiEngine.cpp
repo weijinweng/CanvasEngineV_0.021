@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "aiEngine.h"
 #include <iostream>
 #include <list>

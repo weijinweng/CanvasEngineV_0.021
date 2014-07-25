@@ -52,7 +52,7 @@ public:
 class aiRenderTab:public tab
 {
 public:
-	AEngine* ai;
+	AiEngine* ai;
 	void generateGraphic();
 	
 };
