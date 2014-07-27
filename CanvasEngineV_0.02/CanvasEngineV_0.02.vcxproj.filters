@@ -42,6 +42,12 @@
     <ClCompile Include="AiEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="aiEngine2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aiEngine3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI.h">
@@ -75,6 +81,12 @@
       <Filter>Header Files\physicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="AiEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aiEngine2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aiEngine3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
