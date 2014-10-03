@@ -1,7 +1,122 @@
-﻿Build started 2014/7/25 17:49:09.
+﻿Build started 2014/7/28 14:47:18.
      1>Project "C:\Users\Administrator\Documents\CanvasEngine_v0.01\CanvasEngine_v0.01\github\CanvasEngineV_0.021\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AiEngine.cpp Main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AiEngine.cpp aiEngine2.cpp aiEngine3.cpp Main.cpp
+         aiEngine3.cpp
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'OUTING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'OUTING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'TALKING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'TALKING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'RESTING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'RESTING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'FIGHTING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'FIGHTING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'EATING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'EATING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(14): error C2365: 'PLAYING' : redefinition; previous definition was 'enumerator'
+                 c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(12) : see declaration of 'PLAYING'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(128): error C2065: 'aiObjectives' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(128): error C2059: syntax error : '>'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(129): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(132): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(147): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(150): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(165): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(168): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(170): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(173): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(187): error C2065: 'aiActions' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(187): error C2059: syntax error : '>'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(197): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(200): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(204): error C2065: 'aiObjectives' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(204): error C2059: syntax error : '>'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(211): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(214): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.h(216): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(3): error C2653: 'aiScheduler' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(4): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(8): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(10): error C2653: 'aiScheduler' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(11): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(12): error C2065: 'aiList' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(12): error C2143: syntax error : missing ',' before ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(15): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(17): error C2653: 'aiScheduler' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(18): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(21): error C2065: 'aiObjectives' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(21): error C2059: syntax error : '>'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(21): error C2039: 'iterator' : is not a member of '`global namespace''
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(21): error C2059: syntax error : ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(22): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(24): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(27): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(28): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(32): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(34): error C2065: 'aiObjectives' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(34): error C2059: syntax error : '>'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(34): error C2039: 'iterator' : is not a member of '`global namespace''
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(34): error C2059: syntax error : ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(35): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(39): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(40): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(41): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(43): error C2653: 'aiObjectives' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(44): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(50): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(52): error C2653: 'aiObjectives' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(53): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(56): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(59): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(61): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(64): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(66): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(68): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(71): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(73): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(76): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(78): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(81): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(82): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(84): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(87): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(89): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(91): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(94): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(96): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(99): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(101): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(104): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(105): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(107): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(110): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(113): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(114): error C2143: syntax error : missing ')' before ';'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(114): error C2059: syntax error : ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(115): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(117): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(119): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(124): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(125): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(128): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(129): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(130): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(132): error C2653: 'aiObjectives' : is not a class or namespace name
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(133): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(135): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(137): error C2065: 'startTime' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(137): error C2143: syntax error : missing ',' before ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(143): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(145): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(150): error C2065: 'timeStarted2' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(150): error C2143: syntax error : missing ',' before ')'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine3.cpp(150): fatal error C1003: error count exceeds 100; stopping compilation
+         aiEngine2.cpp
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine2.h(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine2.cpp(118): error C2660: 'aiEvents::generateEffect' : function does not take 0 arguments
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine2.cpp(222): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine2.cpp(299): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
          AiEngine.cpp
      1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine.cpp(96): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginev_0.021\canvasenginev_0.02\aiengine.cpp(107): warning C4018: '<' : signed/unsigned mismatch
@@ -46,4 +161,4 @@
 
 Build FAILED.
 
-Time Elapsed 00:00:01.89
+Time Elapsed 00:00:03.23

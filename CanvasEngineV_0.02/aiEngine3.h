@@ -9,12 +9,12 @@
 #include <map>;
 #include "Engine.h"
 
-enum ai_event {WORKING, EATING, RESTING, FIGHTING, OTHER, NONE};
-enum ai_action {WALKING, CALLING, YELLING, RESTROOM, SLEEPING, WRITINGMAIL, EATING, WOKRING};
-enum ai_objectives {OUTING, WOKRING, PLAYING, SLEEPING, FIGHTING};
+enum ai_event {OUTING, WOKRING, TALKING, RESTING, FIGHTING, EATING, PLAYING, PAY, NEGOTIATING,SERVING};
+enum ai_action {OUTING, WORKING, TALKING, RESTING, FIGHTING, EATING, PLAYING,PAY, NEGOTIATING,SERVING, TRAVELING, CONTACTING, YELLING, RESTROOM, SLEEPING, WRITINGMAIL, FINDING, EATALONE, WORKALONE};
+enum ai_objectives {OUTING, WOKRING, TALKING, RESTING, FIGHTING, EATING, PLAYING, PAY, NEGOTIATING,SERVING};
 
-enum ai_location {HOME, SHOPPINGMALL, COMPANYA, COMPANYB, RESTAURANTA, RESTAURANTB};
-enum ai_relation {STRANGER, COLLEGUE, ACQUAINTANCE, FAMILY, FRIENDS, LOVERS};
+enum ai_location {HOME, SHOPPINGMALL, COMPANYA, COMPANYB, RESTAURANTA, RESTAURANTB, PARK};
+enum ai_relation {ENEMY, STRANGER, COLLEGUE, ACQUAINTANCE, FAMILY, FRIENDS};
 enum ai_friendship {OPPONENT,UNFRIENDLY,NOTGOOD, JUSTSOSO, NOTBAD, FRIENDLY, BROTHER}; 
 
 class aiPerson;
@@ -106,33 +106,87 @@ public:
 
 class aiRelation
 {
-
+public:
+	aiPerson* personA;
+	aiPerson* personB;
+	aiRelation(aiPerson* A, aiPerson* B);   
+	Relation* generateRelation();
 };
 
 class aiPerson
 {
+public:
+	aiPerson(int);
+	std::string name;
+	int aiPersonality;
+	int idNum;
 
+	bool occupied;
+
+	aiTime time;
+	aiDebuff* debuff;
+	ai_occupation occupation;
+	ai_mood aiMood;
+	ai_location location;
+	std::vector<Relation*> relationList;
+	aiObjectives* currentObjective;
+	std::vector<aiObjectives*> dailyObjectives;
 };
 
 class aiActions
 {
-	
+public:
+	aiActions(aiPerson* personA, aiTime time, ai_action actionType, std::vector<aiPerson*> aiList);
+
+	aiPerson* personA;
+	aiTime startTime;
+	ai_action actionType;
+	ai_location locationFrom;
+	ai_location locationTo;
+	std::vector<aiPerson*> aiInvolved;
+	std::vector<aiPerson*> aiList;
+	aiTime duration;
+
+	bool completed;
+	bool eventSignal;
+	bool alreadyGenerateEvent;
+	bool halted;
+
+	void printAction();
+	void executeAction();
+	void generateActionEffect();
+	void generateDetail();
+	aiEvents* generateEvent(); 
+	friend aiTime & operator+(aiTime timeStarted, aiTime duration);
+	friend aiTime & operator-(aiTime timeStarted, aiTime duration);
+	friend bool & operator>(aiTime time1, aiTime time2);
 };
 
 class aiEvents
 {
 public:
-	aiEvents(aiPerson* personA, std::vector<aiActions*> actionList, aiTime time);
-	
+	aiEvents(aiPerson* personA, std::vector<aiPerson*> aiInvolved, aiTime time, ai_event eventType, std::vector<aiPerson*> aiList, aiTime duration);
+	aiEvents(aiPerson* personA, aiTime time, ai_event eventType, std::vector<aiPerson*>aiList, aiTime duration);
 	aiPerson* personA;
-	ai_event event;
-	aiTime time;
+	ai_event eventType;
+	aiTime startTime;
 	ai_location location;
 	std::vector<aiPerson*> aiInvolved;
+	std::vector<aiPerson*> aiInteracted;
+	std::vector<aiPerson*> aiList;
+	aiTime duration;
 	
+	bool halted;
+	bool completed;
+
 	void printEvent();
-	void generateAction();
+	void generateDetail();
+	void executeEvent();
+	//void updateEvent(std::vector<aiPerson*> aiInvolved, bool interacted);
 	void generateEventEffect();
+	friend aiTime & operator+(aiTime timeStarted, aiTime duration);
+	friend aiTime & operator-(aiTime timeStarted, aiTime duration);
+	friend aiTime & operator>(aiTime time1, aiTime time2);
 };
 
 class aiEffects
@@ -143,28 +197,54 @@ class aiEffects
 class aiObjectives
 {
 public:
-	aiObjectives(aiPerson* personA, aiTime time);
+	aiObjectives(aiPerson* personA, aiTime time, std::vector<aiPerson*> aiList);
 	
 	int objPriority;
 	aiPerson* personA;
 	ai_objectives objectives;
-	aiTime time;
+	aiTime startTime;
+	aiTime duration;
+	aiTime currentTime;
 	ai_location location;
+	ai_relation relationInvolved;
 	std::vector<aiPerson*> aiInvolved;
+	aiActions* currentAction;
+	aiEvents* currentEvent;
+	std::vector<aiPerson*> aiList;
+	std::vector<aiEvents*> eventList;
+	std::vector<aiActions*> actionList;
 
+	int step;
+
+	bool halted;
+	bool completed;
+	bool interrupted;
+	bool specificPeople;     //check whether aiInvolved are specified or are just randomly picked
+	bool busy;
+
+	void generateDetail();
 	void printObjectives();
-	void generateEvent();
+	void generateEvent();     //what to do list
+	void generateAction();
+
+	void executeAction();
+	void receiveEvent();
 	void generateObjectiveEffect();
+	friend aiTime & operator+(aiTime timeStarted, aiTime duration);
+	friend aiTime & operator-(aiTime timeStarted, aiTime duration);
+	friend aiTime & operator>(aiTime time1, aiTime time2);
 };
 
 class aiScheduler
 {
 public:
-	aiScheduler(aiPerson* personA);
+	aiScheduler(aiPerson* personA, std::vector<aiPerson*> aiList);
 
-	std::vector<aiObjectives> objectiveList;
+	std::vector<aiObjectives*> objectiveList;
+	std::vector<aiPerson*> aiList;
+	aiObjectives* currentObjective;
 	aiPerson* personA;
-	void generateObjectives();
+	void generateObjectives(aiTime);
 	void executeObjectives();       //according to priority   
 
 };
